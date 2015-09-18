@@ -1,0 +1,45 @@
+public class Solution {
+    /**
+     * @param nums: A list of integers.
+     * @return: The maximum number inside the window at each moving.
+     */
+    public ArrayList<Integer> maxSlidingWindow(int[] nums, int k) {
+        // write your code here
+        
+        ArrayList<Integer> results = new ArrayList<Integer>();
+        if(nums == null || nums.length == 0)
+        {
+            return results;
+        }
+        
+        Deque<Integer> deque = new ArrayDeque<Integer>();
+        for(int i = 0; i < k; i++)
+        {
+            while(deque.size() > 0 && nums[deque.peekLast()] <= nums[i])
+            {
+                deque.pollLast();
+            }
+            deque.addLast(i);
+        }
+        
+        for(int i = k; i < nums.length; i++)
+        {
+            results.add(nums[deque.peekFirst()]);
+            while(deque.size() > 0 && nums[deque.peekLast()] <= nums[i])
+            {
+                deque.pollLast();
+            }
+            
+            while(deque.size() > 0 && deque.peekFirst() <= i-k)
+            {
+                deque.pollFirst();
+            }
+            
+            deque.addLast(i);
+        }
+        
+        results.add(nums[deque.peekFirst()]);
+        return results;
+    }
+}
+
