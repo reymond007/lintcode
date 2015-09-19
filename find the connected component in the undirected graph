@@ -1,0 +1,56 @@
+/**
+ * Definition for Undirected graph.
+ * class UndirectedGraphNode {
+ *     int label;
+ *     ArrayList<UndirectedGraphNode> neighbors;
+ *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
+ * };
+ */
+public class Solution {
+    /**
+     * @param nodes a array of Undirected graph node
+     * @return a connected set of a Undirected graph
+     */
+    public List<List<Integer>> connectedSet(ArrayList<UndirectedGraphNode> nodes) {
+        // Write your code here
+        
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        
+        if(nodes == null || nodes.size() == 0)
+        {
+            return results;
+        }
+        
+        HashSet<UndirectedGraphNode> set = new HashSet<UndirectedGraphNode>();
+        List<Integer> solution;
+        
+        for(int i = 0; i < nodes.size(); i++)
+        {
+            solution = new ArrayList<Integer>();
+            helper(nodes.get(i), set, solution);
+            if(solution.size() > 0)
+            {
+                Collections.sort(solution);
+                results.add(solution);
+            }
+        }
+        
+        return results;
+    }
+    
+    public void helper(UndirectedGraphNode node, 
+                                    HashSet<UndirectedGraphNode> set, List<Integer> solution)
+    {
+        if(set.contains(node))
+        {
+            return;
+        }
+        
+        set.add(node);
+        solution.add(node.label);
+        for(UndirectedGraphNode n : node.neighbors)
+        {
+            helper(n, set, solution);
+        }
+    }
+}
