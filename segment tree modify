@@ -1,0 +1,59 @@
+/**
+ * Definition of SegmentTreeNode:
+ * public class SegmentTreeNode {
+ *     public int start, end, max;
+ *     public SegmentTreeNode left, right;
+ *     public SegmentTreeNode(int start, int end, int max) {
+ *         this.start = start;
+ *         this.end = end;
+ *         this.max = max
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+public class Solution {
+    /**
+     *@param root, index, value: The root of segment tree and 
+     *@ change the node's value with [index, index] to the new given value
+     *@return: void
+     */
+    public void modify(SegmentTreeNode root, int index, int value) {
+        // write your code here
+        
+        Stack<SegmentTreeNode> stack = new Stack<SegmentTreeNode>();
+        SegmentTreeNode cur = root;
+        
+        while(cur.start != cur.end)
+        {
+            int mid = cur.start + (cur.end-cur.start)/2;
+            stack.push(cur);
+            
+            if(index <= mid)
+            {
+                cur = cur.left;
+            }
+            else
+            {
+                cur = cur.right;
+            }
+        }
+        
+        cur.max = value;
+        
+        while(!stack.isEmpty())
+        {
+            cur = stack.pop();
+
+            if(cur.left != null)
+            {
+                cur.max = Math.max(cur.left.max, value);
+            }
+            if(cur.right != null)
+            {
+                cur.max = Math.max(cur.right.max, cur.max);
+            }
+        }
+        
+        
+    }
+}
