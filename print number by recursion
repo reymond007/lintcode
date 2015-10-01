@@ -1,0 +1,33 @@
+public class Solution {
+    /**
+     * @param n: An integer.
+     * return : An array storing 1 to the largest number with n digits.
+     */
+    public List<Integer> numbersByRecursion(int n) {
+        // write your code here
+        
+        List<Integer> results = new ArrayList<Integer>();
+        if(n <= 0)
+        {
+            return results;
+        }
+        
+        helper(1, n, results);
+        return results;
+    }
+    
+    public void helper(int i, int n, List<Integer> results)
+    {
+        if(i > n)
+        {
+            return;
+        }
+        
+        
+        for(int v = (int)Math.pow(10,i-1); v <= (int)Math.pow(10,i)-1; v++)
+        {
+            results.add(v);
+        }
+        helper(i+1, n, results);
+    }
+}
