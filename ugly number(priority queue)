@@ -1,0 +1,53 @@
+class Solution {
+    /**
+     * @param k: The number k.
+     * @return: The kth prime number as description.
+     */
+    public long kthPrimeNumber(int k) {
+        // write your code here
+        
+        if(k <= 0)
+        {
+            return 0;
+        }
+        
+        long min = 0;
+        Queue<Long> queue = new PriorityQueue<Long>();
+        HashSet<Long> set = new HashSet<Long>();
+        
+        long three = 3;
+        long five = 5;
+        long seven = 7;
+        queue.offer(three);
+        queue.offer(five);
+        queue.offer(seven);
+        
+        set.add(three);
+        set.add(five);
+        set.add(seven);
+        
+        for(int i = 1; i <= k; i++)
+        {
+            min = queue.poll();
+            
+            if(!set.contains(min*3))
+            {
+                queue.offer(min*3);
+                set.add(min*3);
+            }
+            if(!set.contains(min*5))
+            {
+                queue.offer(min*5);
+                set.add(min*5);
+            }
+            if(!set.contains(min*7))
+            {
+                queue.offer(min*7);
+                set.add(min*7);
+            }
+        }
+        
+        return min;
+    }
+};
+
