@@ -1,0 +1,49 @@
+class Solution {
+    /**
+     * @param k: The number k.
+     * @return: The kth prime number as description.
+     */
+    public long kthPrimeNumber(int k) {
+        // write your code here
+        
+        if(k <= 0)
+        {
+            return 0;
+        }
+        
+        ArrayList<Long> results = new ArrayList<Long>();
+        long one = 1;
+        results.add(one);
+        
+        int ithree = 0;
+        int ifive = 0;
+        int iseven = 0;
+        
+        for(int i = 1; i <=k; i++)
+        {
+            long three = results.get(ithree)*3;
+            long five = results.get(ifive)*5;
+            long seven = results.get(iseven)*7;
+            
+            long result = Math.min(Math.min(three, five),seven);
+            
+            if(result == three)
+            {
+                ithree++;
+            }
+            if(result == five)
+            {
+                ifive++;
+            }
+            if(result == seven)
+            {
+                iseven++;
+            }
+            
+            results.add(result);
+        }
+        
+        return results.get(results.size()-1);
+    }
+};
+
